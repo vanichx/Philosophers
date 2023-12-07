@@ -6,92 +6,52 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:57:46 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/10 16:12:12 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:32:33 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-void	*monitor(void *data_pointer)
+void	create_threads(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *) data_pointer;
-	pthread_mutex_lock(&philo->data->write);
-	pthread_mutex_unlock(&philo->data->write);
-	while (philo->data->dead == 0)
+	int i;
+	long int time;
+	
+	i = -1;
+	while(++i < philo->params->num_p)
+		pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
+	i = -1;
+	time = time_now();
+	while (++i < philo->params->num_p)
 	{
-		pthread_mutex_lock(&philo->lock);
-		if (philo->data->finished >= philo->data->number_of_philo)
-			philo->data->dead = 1;
-		pthread_mutex_unlock(&philo->lock);
+		philo[i].start = time;
+		philo[i].meal = time;
 	}
-	return ((void *)0);
+	philo->params->ready = 1;
 }
 
-void	*supervisor(void *philo_pointer)
+void	init_mutexes(t_philo *philo, t_data *params)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *) philo_pointer;
-	while (philo->data->dead == 0)
-	{
-		pthread_mutex_lock(&philo->lock);
-		if (get_time() >= philo->time_to_die && philo->eating == 0)
-			messages(PHILO_DIED, philo);
-		if (philo->meals_eaten == philo->data->number_of_meals)
-		{
-			pthread_mutex_lock(&philo->data->lock);
-			philo->data->finished++;
-			philo->meals_eaten++;
-			pthread_mutex_unlock(&philo->data->lock);
-		}
-		pthread_mutex_unlock(&philo->lock);
-	}
-	return ((void *)0);
-}
-
-void	*routine(void *philo_pointer)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *) philo_pointer;
-	philo->time_to_die = philo->data->death_time + get_time();
-	if (pthread_create(&philo->th, NULL, &supervisor, (void *)philo))
-		return ((void *)1);
-	while (philo->data->dead == 0)
-	{
-		eat(philo);
-		messages(PHILO_THINK, philo);
-	}
-	if (pthread_join(philo->th, NULL))
-		return ((void *)1);
-	return ((void *)0);
-}
-
-int	init_threads(t_data *data)
-{
-	int			i;
-	pthread_t	th;
+	int i;
 
 	i = -1;
-	data->start_time = get_time();
-	if (data->number_of_meals > 0)
-	{
-		if (pthread_create(&th, NULL, &monitor, &data->philos[0]))
-			return (error(THREAD_ERROR_1, data));
-	}
-	while (++i < data->number_of_philo)
-	{
-		if (pthread_create(&data->th_id[i], NULL, &routine, &data->philos[i]))
-			return (error(THREAD_ERROR_1, data));
-		ft_usleep(1);
-	}
+	while (++i < params->num_p)
+		pthread_mutex_init(philo[i].left_fork, NULL);
+	pthread_mutex_init(params->print, NULL);
+}
+
+void	init_threads(t_philo *philo, t_data *params)
+{
+	init_mutexes(philo, params);
+	create_threads(philo);
+	check_threads(philo);
+}
+
+void	join_threads(t_philo *philo)
+{
+	int	i;
+
 	i = -1;
-	while (++i < data->number_of_philo)
-	{
-		if (pthread_join(data->th_id[i], NULL))
-			return (error(JOIN_ERROR, data));
-	}
-	return (0);
+	while (++i < philo->params->num_p)
+		pthread_join(philo[i].thread, (void *)&philo[i]);
 }

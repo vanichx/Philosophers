@@ -6,7 +6,7 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/27 10:06:26 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/10 16:19:06 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/12/07 17:30:42 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,11 @@ NAME = philo
 OBJ_DIR = obj/
 SRC_DIR = src/
 
-SRC	=	args_checks \
-				init \
-     			life \
-     			main \
-    			time \
-     			malloc \
-    			threads
+SRC	=	main \
+		parse \
+		routine \
+		threads \
+		utils 
 
 SRCS =  $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC)))
 OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
@@ -40,7 +38,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-	@echo -e "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 	
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c 
 	@mkdir -p $(@D)
@@ -50,11 +48,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 clean:
 		@$(RM) $(OBJS)
 		@$(RM) $(OBJ_DIR)
-		@echo -e "$(YELLOW)philo objects files deleted!$(DEFAULT)"
+		@echo "$(YELLOW)philo objects files deleted!$(DEFAULT)"
 	
 fclean: clean
 		@$(RM) $(NAME)
-		@echo -e "$(RED)philo program and objects deleted!$(DEFAULT)"
+		@echo "$(RED)philo program and objects deleted!$(DEFAULT)"
 
 re:		fclean all
 
