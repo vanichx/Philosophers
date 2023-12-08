@@ -6,13 +6,13 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:26:15 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 17:31:29 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:59:32 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int		check_death(t_philo *philo)
+int	check_death(t_philo *philo)
 {
 	long int	t_now;
 
@@ -66,7 +66,7 @@ void	eat(t_philo *philo)
 
 void	*routine(void *phil)
 {
-	t_philo *p;
+	t_philo	*p;
 
 	p = (t_philo *)phil;
 	while (!(p->params->ready))

@@ -6,15 +6,13 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:28:50 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 17:24:49 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:12:45 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	*data;
 	t_philo	*philos;
@@ -33,7 +31,8 @@ int main(int argc, char **argv)
 	else
 	{
 		printf(RED"Error: Invalid number of arguments\n"RESET);
-		printf(G"Usage: ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number of meals]\n"RESET);
+		printf(G"Usage: ./philo [number_of_philosophers] [time_to_die] \
+			[time_to_eat] [time_to_sleep] [number of meals]\n"RESET);
 		printf(G"Optional: [number of meals]\n"RESET);
 		printf(G"Example: ./philo 5 800 200 200 7\n"RESET);
 	}

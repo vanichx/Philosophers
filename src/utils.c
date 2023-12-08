@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 10:47:55 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 17:45:37 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:58:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atoi(const char *ptr)
 
 u_int64_t	time_now(void)
 {
-	uint64_t	miliseconds;
+	uint64_t		miliseconds;
 	struct timeval	tp;
 
 	gettimeofday(&tp, NULL);
@@ -68,15 +68,20 @@ void	print_msg(t_philo *philo, int i)
 		return ;
 	}
 	if (i == 1)
-		printf(G"%lld %d is eating\n"RESET, time_now() - philo->start, philo->id);
+		printf(G"%lld %d is eating\n"RESET, \
+			time_now() - philo->start, philo->id);
 	else if (i == 2)
-		printf(C"%lld %d is sleeping\n"RESET, time_now() - philo->start, philo->id);
+		printf(C"%lld %d is sleeping\n"RESET, \
+			time_now() - philo->start, philo->id);
 	else if (i == 3)
-		printf(B"%lld %d is thinking\n"RESET, time_now() - philo->start, philo->id);
+		printf(B"%lld %d is thinking\n"RESET, \
+			time_now() - philo->start, philo->id);
 	else if (i == 4)
-		printf(FAINT"%lld %d has taken fork\n"RESET, time_now() - philo->start, philo->id);
+		printf(FAINT"%lld %d has taken fork\n"RESET, \
+			time_now() - philo->start, philo->id);
 	else if (i == 5)
-		printf(RED"%lld %d died\n"RESET, time_now() - philo->start, philo->id);
+		printf(RED"%lld %d died\n"RESET, \
+			time_now() - philo->start, philo->id);
 	pthread_mutex_unlock(philo->params->print);
 }
 

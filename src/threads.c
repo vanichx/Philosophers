@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:57:46 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 17:32:33 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:59:02 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	create_threads(t_philo *philo)
 {
-	int i;
-	long int time;
-	
+	int			i;
+	long int	time;
+
 	i = -1;
-	while(++i < philo->params->num_p)
+	while (++i < philo->params->num_p)
 		pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
 	i = -1;
 	time = time_now();
@@ -32,7 +32,7 @@ void	create_threads(t_philo *philo)
 
 void	init_mutexes(t_philo *philo, t_data *params)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < params->num_p)

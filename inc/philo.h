@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:06:24 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 17:52:30 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:13:11 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # define FAINT "\033[2m"
 # define RESET "\033[0m"
@@ -46,7 +47,7 @@ typedef struct s_data
 typedef struct s_philo
 {
 	int				id;
-	int 			iter;
+	int				iter;
 	long int		start;
 	long int		meal;
 	pthread_t		thread;
@@ -56,9 +57,10 @@ typedef struct s_philo
 }				t_philo;
 
 /* parse.c */
-int 		check_input(char **argv);
+int			check_input(char **argv);
 t_data		*parse_data(char **argv);
 void		init_philos(t_philo *philo, t_data *params);
+int			check_value(char *arg, int min, int max, char *error_message);
 
 /* routine.c */
 int			check_death(t_philo *philo);

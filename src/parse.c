@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:43:37 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/07 16:13:43 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:12:06 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	arg_is_number(char *argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])
@@ -29,49 +29,44 @@ static int	arg_is_number(char *argv)
 	return (1);
 }
 
-
-int check_input(char **argv)
+int	check_value(char *arg, int min, int max, char *error_message)
 {
-	int i;
+	int	value;
 
-	i = 1;
-	while (argv[i])
+	value = ft_atoi(arg);
+	if (value < min || value > max)
 	{
-		if (arg_is_number(argv[i]) == 0)
-			return (0);
-		i++;
-	}
-	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[1]) > 200)
-	{
-		printf(RED"Error: number of philosophers must be at this limits (1 to 200)\n"RESET);
+		printf(RED"%s\n"RESET, error_message);
 		return (0);
 	}
-	if (ft_atoi(argv[2]) < 60)
-	{
-		printf(RED"Error: time to die must be at least 60 ms\n"RESET);
-		return (0);
-	}
-	if (ft_atoi(argv[3]) < 60)
-	{
-		printf(RED"Error: time to eat must be at least 60 ms\n"RESET);
-		return (0);
-	}
-	if (ft_atoi(argv[4]) < 60)
-	{
-		printf(RED"Error: time to sleep must be at least 60 ms\n"RESET);
-		return (0);
-	}
-	if (argv[5] && ft_atoi(argv[5]) <= 0)
-	{
-		printf(RED"Error: number of times each philosopher must eat must be greater than 0\n"RESET);
-		return (0);
-	}
-	return	 (1);
+	return (1);
 }
 
-t_data *parse_data(char **argv)
+int	check_input(char **argv)
 {
-	t_data *params;
+	if (!arg_is_number(argv[1]) || !check_value(argv[1], 1, 200, \
+		"Error: number of philosophers must be at this limits (1 to 200)"))
+		return (0);
+	if (!arg_is_number(argv[2]) || !check_value(argv[2], 60, INT_MAX, \
+		"Error: time to die must be at least 60 ms"))
+		return (0);
+	if (!arg_is_number(argv[3]) || !check_value(argv[3], 60, INT_MAX, \
+		"Error: time to eat must be at least 60 ms"))
+		return (0);
+	if (!arg_is_number(argv[4]) || !check_value(argv[4], 60, INT_MAX, \
+		"Error: time to sleep must be at least 60 ms"))
+		return (0);
+	if (argv[5] && (!arg_is_number(argv[5]) \
+		|| !check_value(argv[5], 1, INT_MAX, \
+		"Error: number of times each philosopher \
+		must eat must be greater than 0")))
+		return (0);
+	return (1);
+}
+
+t_data	*parse_data(char **argv)
+{
+	t_data	*params;
 
 	params = malloc(sizeof(t_data));
 	if (!params)
@@ -98,9 +93,9 @@ t_data *parse_data(char **argv)
 	return (params);
 }
 
-void init_philos(t_philo *philo, t_data *params)
+void	init_philos(t_philo *philo, t_data *params)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < params->num_p)
