@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:57:46 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/08 10:59:02 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:48:32 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ void	init_mutexes(t_philo *philo, t_data *params)
 	pthread_mutex_init(params->print, NULL);
 }
 
-void	init_threads(t_philo *philo, t_data *params)
-{
-	init_mutexes(philo, params);
-	create_threads(philo);
-	check_threads(philo);
-}
-
 void	join_threads(t_philo *philo)
 {
 	int	i;
@@ -54,4 +47,11 @@ void	join_threads(t_philo *philo)
 	i = -1;
 	while (++i < philo->params->num_p)
 		pthread_join(philo[i].thread, (void *)&philo[i]);
+}
+
+void	init_threads(t_philo *philo, t_data *params)
+{
+	init_mutexes(philo, params);
+	create_threads(philo);
+	check_threads(philo);
 }

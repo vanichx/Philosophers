@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:26:15 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/08 10:59:32 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:59:26 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_death(t_philo *philo)
 		pthread_mutex_unlock(philo->params->print);
 		print_msg(philo, 5);
 		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_rork);
+		pthread_mutex_unlock(philo->right_fork);
 		return (1);
 	}
 	pthread_mutex_unlock(philo->params->print);
@@ -54,14 +54,14 @@ void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	print_msg(philo, 4);
-	pthread_mutex_lock(philo->right_rork);
+	pthread_mutex_lock(philo->right_fork);
 	print_msg(philo, 4);
 	philo->meal = time_now();
 	philo->iter++;
 	print_msg(philo, 1);
 	ft_usleep(philo->params->tte);
 	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_rork);
+	pthread_mutex_unlock(philo->right_fork);
 }
 
 void	*routine(void *phil)

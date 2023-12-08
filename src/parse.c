@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:43:37 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/08 11:12:06 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:57:21 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ t_data	*parse_data(char **argv)
 	t_data	*params;
 
 	params = malloc(sizeof(t_data));
-	if (!params)
+	if (params == NULL)
 		return (NULL);
 	params->print = malloc(sizeof(pthread_mutex_t));
-	if (!params->print)
+	if (params->print == NULL)
 		return (NULL);
 	params->fork = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
-	if (!params->fork)
+	if (params->fork == NULL)
 		return (NULL);
 	params->num_p = ft_atoi(argv[1]);
 	params->ttd = ft_atoi(argv[2]);
@@ -106,9 +106,9 @@ void	init_philos(t_philo *philo, t_data *params)
 		philo[i].meal = 0;
 		philo[i].left_fork = &params->fork[i];
 		if (philo[i].id == params->num_p)
-			philo[i].right_rork = &params->fork[0];
+			philo[i].right_fork = &params->fork[0];
 		else
-			philo[i].right_rork = &params->fork[i + 1];
+			philo[i].right_fork = &params->fork[i + 1];
 		philo[i].params = params;
 		philo[i].iter = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:06:24 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/12/08 11:13:11 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:36:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ typedef struct s_philo
 	long int		start;
 	long int		meal;
 	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
 	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_rork;
+	pthread_mutex_t	*right_fork;
 	t_data			*params;
 }				t_philo;
 
